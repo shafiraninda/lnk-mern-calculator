@@ -4,20 +4,25 @@ import { Button, Form, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Axios from 'axios';
 import { API_URL } from "../../config/api";
+import { useDispatch } from "react-redux";
+import { update } from '../../features/userSlice';
 
 function Login(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const Login = async (e) => {
         e.preventDefault();
         try {
-            await Axios.post(`${API_URL}/login`, {
+            const auth = await Axios.post(`${API_URL}/login`, {
                 username: username,
                 password: password
             })
-
+            console.log(auth.data.data)
+            dispatch(update(auth.data.data))
+            localStorage.setItem("authKey", JSON.stringify(auth.data.data))
             navigate('/')
         } catch (error) {
             if(error.response){

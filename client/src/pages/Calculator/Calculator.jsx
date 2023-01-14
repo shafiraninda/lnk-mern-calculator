@@ -4,9 +4,18 @@ import { Card, Navbar, Container } from "react-bootstrap";
 import { API_URL } from "../../config/api";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
+import { useSelector } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { update } from '../../features/userSlice';
 
 function Calculator(){
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { loginTime_id, username, loginTime } = useSelector(state => state.user)
+    // const user = useSelector(state => state)
+
+    // console.log(user)
+
     const [value, setValue] = useState("")
     const [operator, setOperator] = useState('')
     const [prevNumber, setPrevNumber] = useState('')
@@ -144,11 +153,21 @@ function Calculator(){
     const Logout = async (e) => {
         e.preventDefault();
         try {
+            console.log(new Date().getTime())
+            console.log(new Date(loginTime).getTime())
+            const diffTime = new Date().getTime() - new Date(loginTime).getTime()
+            console.log(diffTime)
             await Axios.post(`${API_URL}/logout`, {
-                // username: username,
-                // password: password
+                loginTime_id: loginTime_id,
+                time: diffTime/1000
             })
-
+            dispatch(update({
+                username: '',
+                user_id: '',
+                token: '',
+                loginTime_id: ''
+            }))
+            localStorage.removeItem("authKey")
             navigate('/login')
         } catch (error) {
             if(error.response){
@@ -163,7 +182,7 @@ function Calculator(){
             <Container>
                 <Navbar.Brand href="#">CALCULATOR</Navbar.Brand>
                 <div class="d-flex align-content-center">
-                    {/* <p class="p-2 fs-5">Hi, user</p> */}
+                    <p class="p-2 fs-5">Hi, {username}</p>
                     <button class="btn btn-danger" onClick={Logout}>Logout</button>
                 </div>
             </Container>

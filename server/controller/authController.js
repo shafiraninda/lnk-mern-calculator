@@ -36,7 +36,8 @@ async function login(req, res, next){
             user_id: findUser._id,
             username: findUser.username,
             token: token,
-            loginTime_id: historyLogin._id
+            loginTime_id: historyLogin._id,
+            loginTime: historyLogin.createdAt
         }));
     } catch (error) {
         next(error)
