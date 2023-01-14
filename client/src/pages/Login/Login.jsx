@@ -20,7 +20,7 @@ function Login(){
                 username: username,
                 password: password
             })
-            console.log(auth.data.data)
+            
             dispatch(update(auth.data.data))
             localStorage.setItem("authKey", JSON.stringify(auth.data.data))
             navigate('/')

@@ -12,9 +12,6 @@ function Calculator(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { loginTime_id, username, loginTime } = useSelector(state => state.user)
-    // const user = useSelector(state => state)
-
-    // console.log(user)
 
     const [value, setValue] = useState("")
     const [operator, setOperator] = useState('')
@@ -24,7 +21,6 @@ function Calculator(){
 
     function handleClick(x){
         setValue(value + x.target.value)
-        console.log(value)
     };
     function deleteClick(){
         setValue('')
@@ -153,14 +149,12 @@ function Calculator(){
     const Logout = async (e) => {
         e.preventDefault();
         try {
-            console.log(new Date().getTime())
-            console.log(new Date(loginTime).getTime())
             const diffTime = new Date().getTime() - new Date(loginTime).getTime()
-            console.log(diffTime)
             await Axios.post(`${API_URL}/logout`, {
                 loginTime_id: loginTime_id,
                 time: diffTime/1000
             })
+            
             dispatch(update({
                 username: '',
                 user_id: '',

@@ -11,7 +11,6 @@ const userSlice = createSlice({
     },
     reducers: {
         update: (state, action) => {
-            console.log(action.payload)
             // eslint-disable-next-line no-unused-expressions
             state.user_id = action.payload.user_id;
             state.token = action.payload.token;

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import "./Signup.css";
 import { Button, Form, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Axios } from "axios";
+import Axios from "axios";
 import { API_URL } from "../../config/api";
 
 function Signup(){
@@ -13,7 +13,7 @@ function Signup(){
     const Signup = async (e) => {
         e.preventDefault();
         try {
-            await Axios.post(`${API_URL}/signup`, {
+            await Axios.post(`${API_URL}/user/create`, {
                 username: username,
                 password: password
             })
