@@ -4,9 +4,9 @@ const verifyToken = require("../middleware/authentication");
 const userController = require('../controller/userController');
 const authController = require('../controller/authController');
 
-ROUTER.use("/user/create", userController.createUser);
-ROUTER.use("/login", authController.login);
-ROUTER.use("/logout", verifyToken, authController.logout)
+ROUTER.post("/user/create", userController.createUser);
+ROUTER.post("/login", authController.login);
+ROUTER.post("/logout", verifyToken, authController.logout)
 
 ROUTER.all("*", (req, res, next) => {
     res.status(404).json({

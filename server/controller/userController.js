@@ -17,6 +17,8 @@ async function createUser(req, res, next){
             password: hashPassword
         });
 
+        await newUser.save();
+
         if(newUser){
             return res.status(200).json(respons.successWithData('Success', newUser));
         }else{

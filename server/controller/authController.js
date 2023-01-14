@@ -25,11 +25,12 @@ async function login(req, res, next){
         }, process.env.JWT_SECRET
         );
 
-        const historyLogin = new LoginTime.create({
+        const historyLogin = new LoginTime({
             userId: findUser._id,
             token: token
         });
 
+        await historyLogin.save();
         if(!historyLogin) throw new errorHandler(400, "Login error")
         res.status(200).json(respons.successWithData('Login success', {
             user_id: findUser._id,
